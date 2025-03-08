@@ -114,10 +114,10 @@ class TorontoTouristVisualization {
   async loadData() {
     try {
       const [locationsData, onlineMentionsData, localMentionsData, personInfoData] = await Promise.all([
-        d3.json("data/locations_data.json"),
-        d3.json("data/online_mentions.json"),
-        d3.json("data/local_mentions.json").catch(() => []),
-        d3.json("data/person_info.json").catch(() => [])
+        d3.json("/data/locations_data.json"),
+        d3.json("/data/online_mentions.json"),
+        d3.json("/data/local_mentions.json").catch(() => []),
+        d3.json("/data/person_info.json").catch(() => [])
       ]);
       
       this.locations = locationsData;
