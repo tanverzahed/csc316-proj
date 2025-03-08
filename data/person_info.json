@@ -1,0 +1,17 @@
+[
+  {
+    "Person": "P1",
+    "description": "Tries to make conservative recommendations based on the biggest things to do. Outside of that is very focused on food culture and thinks Toronto has many cultural cuisines to try Likes food.",
+    "length_in_toronto": 23
+  },
+  {
+    "Person": "P2",
+    "description": "Very cost conservative and enjoys architecture and history. Tends to look for best-value deals when traveling Likes history",
+    "length_in_toronto": 7
+  },
+  {
+    "Person": "P3",
+    "description": "Wants to recommend the places personally enjoyed and hopes that others will enjoy it as well. Likes group activities",
+    "length_in_toronto": 5
+  }
+]

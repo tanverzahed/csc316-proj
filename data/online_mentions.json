@@ -1,0 +1,227 @@
+[
+  {
+    "location_id": 7,
+    "count": 22,
+    "Name": "Casa Loma"
+  },
+  {
+    "location_id": 9,
+    "count": 20,
+    "Name": "CN Tower"
+  },
+  {
+    "location_id": 30,
+    "count": 19,
+    "Name": "ROM"
+  },
+  {
+    "location_id": 2,
+    "count": 18,
+    "Name": "AGO"
+  },
+  {
+    "location_id": 19,
+    "count": 18,
+    "Name": "Hockey Hall of Fame"
+  },
+  {
+    "location_id": 36,
+    "count": 17,
+    "Name": "St. Lawrence Market"
+  },
+  {
+    "location_id": 40,
+    "count": 15,
+    "Name": "Toronto Islands"
+  },
+  {
+    "location_id": 11,
+    "count": 15,
+    "Name": "Distillery District"
+  },
+  {
+    "location_id": 27,
+    "count": 14,
+    "Name": "Ripley's"
+  },
+  {
+    "location_id": 43,
+    "count": 14,
+    "Name": "Toronto Zoo"
+  },
+  {
+    "location_id": 18,
+    "count": 14,
+    "Name": "High Park"
+  },
+  {
+    "location_id": 25,
+    "count": 12,
+    "Name": "Ontario Science Center"
+  },
+  {
+    "location_id": 12,
+    "count": 11,
+    "Name": "Eaton Center"
+  },
+  {
+    "location_id": 4,
+    "count": 10,
+    "Name": "Bata Shoe Museum"
+  },
+  {
+    "location_id": 20,
+    "count": 11,
+    "Name": "Kensington Market"
+  },
+  {
+    "location_id": 6,
+    "count": 9,
+    "Name": "Canada's Wonderland"
+  },
+  {
+    "location_id": 17,
+    "count": 9,
+    "Name": "Harbourfront"
+  },
+  {
+    "location_id": 29,
+    "count": 7,
+    "Name": "Rogers Center"
+  },
+  {
+    "location_id": 23,
+    "count": 7,
+    "Name": "Nathan Phillips Square"
+  },
+  {
+    "location_id": 1,
+    "count": 7,
+    "Name": "Aga Khan"
+  },
+  {
+    "location_id": 41,
+    "count": 6,
+    "Name": "Toronto Music Garden"
+  },
+  {
+    "location_id": 16,
+    "count": 5,
+    "Name": "Graffiti Alley"
+  },
+  {
+    "location_id": 47,
+    "count": 4,
+    "Name": "Yonge Dundas Square"
+  },
+  {
+    "location_id": 3,
+    "count": 4,
+    "Name": "Allan Gardens"
+  },
+  {
+    "location_id": 15,
+    "count": 4,
+    "Name": "Fork York Historic Site"
+  },
+  {
+    "location_id": 31,
+    "count": 4,
+    "Name": "Rouge National Urban Park"
+  },
+  {
+    "location_id": 37,
+    "count": 4,
+    "Name": "The Beaches"
+  },
+  {
+    "location_id": 35,
+    "count": 3,
+    "Name": "Scotiabank Arena"
+  },
+  {
+    "location_id": 39,
+    "count": 3,
+    "Name": "Toronto City Hall"
+  },
+  {
+    "location_id": 46,
+    "count": 3,
+    "Name": "Village at Black Creek"
+  },
+  {
+    "location_id": 14,
+    "count": 3,
+    "Name": "Evergreen Brick Works"
+  },
+  {
+    "location_id": 38,
+    "count": 3,
+    "Name": "TIFF Lightbox"
+  },
+  {
+    "location_id": 28,
+    "count": 3,
+    "Name": "Riverdale Farm"
+  },
+  {
+    "location_id": 34,
+    "count": 3,
+    "Name": "Scarborough Bluffs"
+  },
+  {
+    "location_id": 33,
+    "count": 2,
+    "Name": "Royal Alexandra Theatre"
+  },
+  {
+    "location_id": 8,
+    "count": 2,
+    "Name": "Chinatown"
+  },
+  {
+    "location_id": 5,
+    "count": 2,
+    "Name": "Budweiser Stage"
+  },
+  {
+    "location_id": 13,
+    "count": 2,
+    "Name": "Elgin & Winter Garden Theatres"
+  },
+  {
+    "location_id": 42,
+    "count": 2,
+    "Name": "Toronto Railway Museum"
+  },
+  {
+    "location_id": 21,
+    "count": 2,
+    "Name": "Massey Hall"
+  },
+  {
+    "location_id": 32,
+    "count": 2,
+    "Name": "Roy Thomson Hall"
+  },
+  {
+    "location_id": 44,
+    "count": 2,
+    "Name": "Trinity Bellwords Park"
+  },
+  {
+    "location_id": 22,
+    "count": 2,
+    "Name": "Museum of Illusions"
+  },
+  {
+    "location_id": 26,
+    "count": 2,
+    "Name": "Philosopher's Walk"
+  },
+  {
+    "location_id": 48,
+    "count": 2,
+    "Name": "Yorkville"
+  }
+]

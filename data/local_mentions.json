@@ -1,0 +1,67 @@
+[
+  {
+    "Person": "P1",
+    "location_id": 24,
+    "Name": "Niagara"
+  },
+  {
+    "Person": "P1",
+    "location_id": 40,
+    "Name": "Toronto Islands"
+  },
+  {
+    "Person": "P1",
+    "location_id": 20,
+    "Name": "Kensington Market"
+  },
+  {
+    "Person": "P1",
+    "location_id": 10,
+    "Name": "Cultural foods"
+  },
+  {
+    "Person": "P2",
+    "location_id": 9,
+    "Name": "CN Tower"
+  },
+  {
+    "Person": "P2",
+    "location_id": 30,
+    "Name": "ROM"
+  },
+  {
+    "Person": "P2",
+    "location_id": 7,
+    "Name": "Casa Loma"
+  },
+  {
+    "Person": "P2",
+    "location_id": 27,
+    "Name": "Ripley's"
+  },
+  {
+    "Person": "P3",
+    "location_id": 20,
+    "Name": "Kensington Market"
+  },
+  {
+    "Person": "P3",
+    "location_id": 23,
+    "Name": "Nathan Phillips Square"
+  },
+  {
+    "Person": "P3",
+    "location_id": 18,
+    "Name": "High Park"
+  },
+  {
+    "Person": "P3",
+    "location_id": 45,
+    "Name": "University of Toronto"
+  },
+  {
+    "Person": "P3",
+    "location_id": 24,
+    "Name": "Niagara"
+  }
+]
