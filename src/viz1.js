@@ -245,14 +245,29 @@ function initMainPage(allDataArray) {
   const localMentions = allDataArray[3];
 
   document.getElementById("personSort").innerHTML = `
-    <option value="">All</option>
-    ${personInfo.map(p => `<option value="${p.Person}">${p.Person}</option>`).join("")}
-  `;
+  <fieldset>
+    <legend>Filter by person:</legend>
+    ${personInfo.map(p => `
+      <div class="option">
+        <label>
+          <input 
+            type="radio" 
+            name="person" 
+            class="optionStyle" 
+            value="${p.Person}"> 
+          ${p.Person} 
+        </label><br />
+        <div>${p.description}</div>
+      </div>
+    `).join("")}
+  </fieldset>
+`;
 
-  document.getElementById("personSort").addEventListener("change", function() {
-    const selectedPerson = this.value;
-    mapVis.updateVis(selectedPerson);
-  });
+document.getElementById("personSort").addEventListener("change", function() {
+const selectedPerson = this.querySelector("input[name='person']:checked").value;
+console.log(selectedPerson);
+mapVis.updateVis(selectedPerson);
+});
   // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
   mapVis = new TouristVis(locations, onlineMentions, personInfo, localMentions);
   mapVis.initVis();
