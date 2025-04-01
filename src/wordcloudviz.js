@@ -21,14 +21,15 @@ export class WordCloud {
      * @param parentElementId
      * @param words {Word[]}
      */
-    constructor(parentElementId, words, {width, height}, onClick, onHover) {
+    constructor(parentElementId, words, {width, height}, onHover, onClick) {
         this.parentElementId = parentElementId;
         this.words = words;
-        this.margin = {top: 10, right: 10, bottom: 10, left: 10},
-        this.width = width - this.margin.left - this.margin.right,
+        this.margin = {top: 10, right: 10, bottom: 10, left: 10};
+        this.width = width - this.margin.left - this.margin.right;
         this.height = height - this.margin.top - this.margin.bottom;
-        this.onClick = onClick;
         this.onHover = onHover;
+        this.onClick = onClick;
+        this.selected = null;
     }
 
     initVis() {
@@ -75,23 +76,25 @@ export class WordCloud {
                 .attr("transform", function(d) {
                     return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                 })
-                .on('mouseover', function(event, d) {
-                    const bar = d3.select(this).style('fill', colors.hover)
-                    if (vis.onClick) {
-                        bar.style('cursor', 'pointer');
-                    }
+                .style('cursor', 'pointer')
+                .on('mouseover', function(_e, d) {
+                    vis.highlightWord(d.text);
                     vis.onHover(dataByWord[d.text]);
                 })
-                .on('mouseout', function(event, d) {
-                    const bar = d3.select(this).style('fill', colors.default);
-                    if (vis.onClick) {
-                        bar.style('cursor', 'default');
-                    }
-                    vis.onHover();
+                .on('mouseout', function() {
+                    vis.highlightWord(vis.selected);
+                    vis.onHover(dataByWord[vis.selected]);
                 })
-                .on('click', vis.onClick)
+                .on('click', function(_e, d) {
+                    vis.onClick(vis.selected === d.text ? null : d.text)
+                })
                 .text(function(d) { return d.text; });
         }
+    }
+
+    selectWord(word) {
+        this.selected = word;
+        this.highlightWord(word);
     }
 
     highlightWord(word) {
@@ -101,7 +104,7 @@ export class WordCloud {
             .selectAll("text")
             .data(vis.layoutWords).transition().duration(0)
             .style("fill", d => {
-                return d.text === word ? colors.hover : colors.default
+                return (d.text === word || (word == null && d.text === this.selected)) ? colors.hover : colors.default
             })
     }
     

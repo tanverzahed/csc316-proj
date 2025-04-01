@@ -1,8 +1,8 @@
-
 import { TouristVis } from "./viz1.js";
-import { stack } from "d3";
+import * as d3 from "d3";
 import { RadialBarViz } from "./radialBarViz.js";
 import { WordCloud } from "./wordcloudviz.js";
+import {BarViz} from "./barViz.js";
 
 let mapVis, radialBarViz;
 
@@ -31,7 +31,7 @@ function initMainPage(allDataArray) {
       <div>
         <label
           for="${p.Person}"
-          class="flex items-center justify-between gap-4 rounded border border-gray-300 bg-white p-3 text-sm font-medium shadow-sm transition-colors hover:bg-gray-50 has-checked:border-blue-600 has-checked:ring-1 has-checked:ring-blue-600"
+          class="flex items-center justify-between gap-4 min-w-full rounded border border-gray-300 bg-white p-3 text-sm font-medium shadow-sm transition-colors hover:bg-gray-50 has-checked:border-blue-600 has-checked:ring-1 has-checked:ring-blue-600"
         >
           <div>
             <p class="text-gray-700">${p.Person}</p>
@@ -64,7 +64,12 @@ function initMainPage(allDataArray) {
   mapVis.updateVis(selectedPerson);
   });
   // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
-  mapVis = new TouristVis(locations, onlineMentions, personInfo, localMentions);
+  mapVis = new TouristVis(locations,
+      onlineMentions,
+      personInfo,
+      localMentions,
+      (mention) => mention.length > 0 ? changeSelectedPlace(mention[0].Name) : null,
+      () => changeSelectedPlace());
   mapVis.initVis();
 
   // Prepare category data for RadialBarViz
@@ -72,8 +77,6 @@ function initMainPage(allDataArray) {
       getOnlineLocationData(locations, onlineMentions),
       getLocalLocationData(locations, localMentions)
   );
-
-  console.log({categories})
 
   const handleRadialBarClick = (label) => {
     mapVis.updateVis(null, null, label);
@@ -83,36 +86,70 @@ function initMainPage(allDataArray) {
   radialBarViz = new RadialBarViz("radialVis", categories, handleRadialBarClick);
   radialBarViz.initVis();
 
-  function normalizeWordcloudSize(count) {
-    const center = 15;
-    const magnitude = 30;
-    const minSize = 5;
-    return (Math.tanh((count - center) / center) + 1) * magnitude + minSize;
+  let selectedPlace = null;
+
+  function changeSelectedPlace(place) {
+    selectedPlace = place;
+    wordCloud.selectWord(place);
+    onlineBarGraph.setSelected(place);
+    if (place == null) {
+      mapVis.closeInfoWindow();
+    }
   }
-    // Prepare data for WordCloud
-    const wordCloudData = onlineMentions.map(d => ({
-      word: d.Name,
-      size: normalizeWordcloudSize(d.count),
-      location_id: d.location_id
-    }));
-    console.log(wordCloudData);
-    function wordCloudOnHover() {
-      console.log("WordCloud hovered");
+
+  // Prepare data for WordCloud
+  const wordCloudData = onlineMentions.map(d => ({
+    word: d.Name,
+    size: normalizeWordcloudSize(d.count),
+    location_id: d.location_id
+  }));
+
+  function handleWordCloudHover(word) {
+    // Highlight bar graph and open map info window when hovering over words
+    if (word == null) {
+      mapVis.closeInfoWindow();
+      onlineBarGraph.highlightBar();
+    } else {
+      mapVis.openInfoWindow(word.location_id);
+      onlineBarGraph.highlightBar(word.word);
     }
-    
-    function wordCloudOnClick() {
-      console.log("WordCloud clicked");
-    }
-  
-    // Initialize WordCloud
-    const wordCloud = new WordCloud(
-      "wordCloudContainer",
-      wordCloudData,
-      { width: 900, height: 450 }, 
-      wordCloudOnHover,
-      wordCloudOnClick
-    );
-    wordCloud.initVis();
+  }
+
+  // Initialize WordCloud
+  const wordCloud = new WordCloud(
+    "wordCloudVis",
+    wordCloudData,
+    { width: 900, height: 450 },
+    handleWordCloudHover,
+    changeSelectedPlace
+  );
+  wordCloud.initVis();
+
+  const onlineBarGraphMargin = {top: 30, right: 30, bottom: 70, left: 60},
+      onlineBarGraphWidth = (420 - onlineBarGraphMargin.left - onlineBarGraphMargin.right) * 2,
+      onlineBarGraphHeight = 400 - onlineBarGraphMargin.top - onlineBarGraphMargin.bottom;
+  const onlineBarGraph = new BarViz({
+    data: onlineMentions,
+    getX: d => d.Name,
+    getY: d => d.count,
+    dims: {margin: onlineBarGraphMargin, width: onlineBarGraphWidth, height: onlineBarGraphHeight},
+    onHover: (bar) => {
+      // Highlight bar graph and open map info window when hovering over bars
+      if (bar == null) {
+        mapVis.closeInfoWindow();
+        wordCloud.highlightWord();
+      } else {
+        mapVis.openInfoWindow(bar.location_id)
+        wordCloud.highlightWord(bar.Name);
+      }
+    },
+    onClick: changeSelectedPlace,
+  });
+  const svg = d3.select("#wordCloudVis")
+      .append("svg")
+      .attr("width", onlineBarGraphWidth + onlineBarGraphMargin.left + onlineBarGraphMargin.right)
+      .attr("height", onlineBarGraphHeight + onlineBarGraphMargin.top + onlineBarGraphMargin.bottom + 50);
+  onlineBarGraph.draw(svg)
 }
 
 function getCategoryMentionCounts(onlineLocationData, localLocationData) {
@@ -148,3 +185,9 @@ export function getOnlineLocationData(locations, online) {
 }
 
 
+function normalizeWordcloudSize(count) {
+  const center = 15;
+  const magnitude = 30;
+  const minSize = 5;
+  return (Math.tanh((count - center) / center) + 1) * magnitude + minSize;
+}

@@ -10,12 +10,11 @@
 
 <!-- WRAPPER -->
 <div>
-    <h1>Toronto Tourist Attractions</h1>
-    <div id="wordCloudContainer"></div>
     <section class="text-gray-600 body-font">
-        <div class="container flex flex-wrap px-5 py-24 mx-auto items-center">
-          <div class="md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200">
-            <a id="backButton" 
+        <div class="container min-w-full grid grid-cols-2 px-5 py-16 items-center">
+          <h1 class="text-center col-span-2">Toronto Tourist Attractions</h1>
+          <div class="flex flex-col row-start-2 items-end md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200 float-right">
+            <a id="backButton"
             class="hidden group relative overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
             >
             <span
@@ -56,31 +55,44 @@
                 Categories
               </span>
               </a>
+                <a id="placesButton"
+                  class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+                >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
+                <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+                >
+                Popular Places
+              </span>
+                </a>
             </div>
+            <div id="wordCloudVis" class="hidden"></div>
             <div id="radialVis" class="hidden"></div>
-            <div id="personSort" class="hidden"></div>
+            <div id="personSort" class="hidden mt-4"></div>
         </div>
-          <div class="basis-24 md:w-1/2 md:pl-12">
+          <div class="basis-24 md:pl-12 row-start-2">
             <div id="map"></div>
           </div>
         </div>
     </section>
-    <div id="map"></div>
 </div>
 <script>
   let peopleButton = document.getElementById("peopleButton");
   let categoriesButton = document.getElementById("categoriesButton");
+  let placesButton = document.getElementById("placesButton");
   let backButton = document.getElementById("backButton");
   backButton.addEventListener("click", function() {
     document.getElementById("personSort").classList.add("hidden");
     document.getElementById("radialVis").classList.add("hidden");
+    document.getElementById("wordCloudVis").classList.add("hidden");
     document.getElementById("choose").classList.add("block");
     document.getElementById("choose").classList.remove("hidden");
     document.getElementById("backButton").classList.add("hidden");
   });
 
   peopleButton.addEventListener("click", function() {
-    document.getElementById("radialVis").classList.add("hidden");
     document.getElementById("personSort").classList.remove("hidden");
     document.getElementById("personSort").classList.add("block");
     document.getElementById("choose").classList.add("hidden");
@@ -88,9 +100,15 @@
     document.getElementById("backButton").classList.add("block");
   });
   categoriesButton.addEventListener("click", function() {
-    document.getElementById("personSort").classList.add("hidden");
     document.getElementById("radialVis").classList.remove("hidden");
     document.getElementById("radialVis").classList.add("block");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+  placesButton.addEventListener("click", function() {
+    document.getElementById("wordCloudVis").classList.add("block");
+    document.getElementById("wordCloudVis").classList.remove("hidden");
     document.getElementById("choose").classList.add("hidden");
     document.getElementById("backButton").classList.remove("hidden");
     document.getElementById("backButton").classList.add("block");

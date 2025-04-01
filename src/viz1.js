@@ -60,7 +60,7 @@ const mapStyles = [
 ];
 
 class TouristVis {
-  constructor(locationData, onlineMentions, personInfo, localMentions) {
+  constructor(locationData, onlineMentions, personInfo, localMentions, onMarkerClick, onCloseInfoWindow) {
     const vis = this;
     vis.map = null;
     vis.overlay = null;
@@ -69,7 +69,11 @@ class TouristVis {
     vis.personInfo = personInfo;            // Additional information about persons
     vis.localMentions = localMentions;      // Local mentions data, which include a "Person" property
     vis.currentInfoWindow = null;
+    vis.currentLocation = null;
+    vis.openInfoWindowCallbacks = {};
     vis.markers = [];
+    vis.onMarkerClick = onMarkerClick;
+    vis.onCloseInfoWindow = onCloseInfoWindow;
     vis.addMarkerStyles();
   }
 
@@ -154,7 +158,9 @@ class TouristVis {
     vis.markers.forEach(marker => marker.setMap(null));
     vis.markers = [];
     const infoWindow = new google.maps.InfoWindow();
-    
+
+    vis.openInfoWindowCallbacks = {};
+
     if (vis.validLocations && vis.validLocations.length > 0) {
       vis.validLocations.forEach(location => {
         // If a Person filter is provided, check for a matching local mention.
@@ -200,12 +206,18 @@ class TouristVis {
           icon: pinSVG,
           optimized: false
         });
-        marker.addListener('click', function() {
-          vis.showInfoWindow(location, infoWindow, marker);
+        const showLocationInfoWindow = () => vis.showInfoWindow(location, infoWindow, marker);
+        vis.openInfoWindowCallbacks[location.location_id] = showLocationInfoWindow;
+        marker.addListener('click', () => {
+          const localMention = showLocationInfoWindow();
+          this.onMarkerClick(localMention);
         });
         vis.markers.push(marker);
       });
     }
+    infoWindow.addListener('closeclick', () => {
+      this.onCloseInfoWindow(vis.currentLocation);
+    });
   }
 
   getOnlineMentionCount(locationId) {
@@ -238,6 +250,20 @@ class TouristVis {
     infoWindow.setContent(content);
     infoWindow.open(vis.map, marker);
     vis.currentInfoWindow = infoWindow;
+    vis.currentLocation = location;
+    return localPerson;
+  }
+
+  closeInfoWindow() {
+    if (this.currentInfoWindow) {
+      this.currentInfoWindow.close();
+    }
+  }
+
+  openInfoWindow(location_id) {
+    if (location_id in this.openInfoWindowCallbacks) {
+      this.openInfoWindowCallbacks[location_id]();
+    }
   }
 }
 
