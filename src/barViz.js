@@ -53,31 +53,25 @@ export class BarViz {
                 return height - y(getY(d));
             })
             .style("fill", d => getX(d) === viz.selected ? hoverColor : primaryColor)
+            .style('cursor', this.onClick ? 'pointer' : null)
             .on('mouseover', function(event, d) {
                 const bar = d3.select(this).style('fill', hoverColor)
-                if (viz.onClick) {
-                    bar.style('cursor', 'pointer');
-                }
+                viz.highlightBar(getX(d));
                 if (viz.onHover) viz.onHover(d);
             })
             .on('mouseout', function(event, d) {
-                const bar = d3.select(this).style('fill', viz.selected !== getX(d) ? primaryColor : hoverColor);
-                if (viz.onClick) {
-                    bar.style('cursor', 'default');
-                }
-                if (viz.onHover) viz.onHover();
+                viz.highlightBar(viz.selected);
+                if (viz.onHover) viz.onHover(viz.selected);
             });
         if (viz.onClick) {
             viz.bars.on('click', (_, d) => {
                 const selected = getX(d);
                 if (selected === viz.selected) {
-                    viz.selected = null;
                     viz.onClick(null);
                 } else {
-                    viz.selected = getX(d);
-                    viz.onClick(d);
+                    viz.onClick(getX(d));
                 }
-                viz.update(viz.data)
+                viz.update(this.data);
             })
         }
     }
@@ -109,6 +103,11 @@ export class BarViz {
             })
 
         newData.exit().transition().attr('height', 0).remove();
+    }
+
+    setSelected(x) {
+        this.selected = x;
+        this.highlightBar(x);
     }
 
     highlightBar(x) {

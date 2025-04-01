@@ -64,7 +64,12 @@ function initMainPage(allDataArray) {
   mapVis.updateVis(selectedPerson);
   });
   // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
-  mapVis = new TouristVis(locations, onlineMentions, personInfo, localMentions);
+  mapVis = new TouristVis(locations,
+      onlineMentions,
+      personInfo,
+      localMentions,
+      (mention) => mention.length > 0 ? changeSelectedPlace(mention[0].Name) : null,
+      () => changeSelectedPlace());
   mapVis.initVis();
 
   // Prepare category data for RadialBarViz
@@ -80,6 +85,17 @@ function initMainPage(allDataArray) {
   // Initialize radial bar visualization
   radialBarViz = new RadialBarViz("radialVis", categories, handleRadialBarClick);
   radialBarViz.initVis();
+
+  let selectedPlace = null;
+
+  function changeSelectedPlace(place) {
+    selectedPlace = place;
+    wordCloud.selectWord(place);
+    onlineBarGraph.setSelected(place);
+    if (place == null) {
+      mapVis.closeInfoWindow();
+    }
+  }
 
   // Prepare data for WordCloud
   const wordCloudData = onlineMentions.map(d => ({
@@ -105,6 +121,7 @@ function initMainPage(allDataArray) {
     wordCloudData,
     { width: 900, height: 450 },
     handleWordCloudHover,
+    changeSelectedPlace
   );
   wordCloud.initVis();
 
@@ -126,6 +143,7 @@ function initMainPage(allDataArray) {
         wordCloud.highlightWord(bar.Name);
       }
     },
+    onClick: changeSelectedPlace,
   });
   const svg = d3.select("#wordCloudVis")
       .append("svg")

@@ -60,7 +60,7 @@ const mapStyles = [
 ];
 
 class TouristVis {
-  constructor(locationData, onlineMentions, personInfo, localMentions) {
+  constructor(locationData, onlineMentions, personInfo, localMentions, onMarkerClick, onCloseInfoWindow) {
     const vis = this;
     vis.map = null;
     vis.overlay = null;
@@ -69,8 +69,11 @@ class TouristVis {
     vis.personInfo = personInfo;            // Additional information about persons
     vis.localMentions = localMentions;      // Local mentions data, which include a "Person" property
     vis.currentInfoWindow = null;
+    vis.currentLocation = null;
     vis.openInfoWindowCallbacks = {};
     vis.markers = [];
+    vis.onMarkerClick = onMarkerClick;
+    vis.onCloseInfoWindow = onCloseInfoWindow;
     vis.addMarkerStyles();
   }
 
@@ -212,6 +215,9 @@ class TouristVis {
         vis.markers.push(marker);
       });
     }
+    infoWindow.addListener('closeclick', () => {
+      this.onCloseInfoWindow(vis.currentLocation);
+    });
   }
 
   getOnlineMentionCount(locationId) {
@@ -244,6 +250,7 @@ class TouristVis {
     infoWindow.setContent(content);
     infoWindow.open(vis.map, marker);
     vis.currentInfoWindow = infoWindow;
+    vis.currentLocation = location;
     return localPerson;
   }
 
