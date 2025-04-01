@@ -27,3 +27,15 @@ a {
 .color-fix-text {
   color: rgb(105, 179, 162);
 }
+
+.info-window h3 {
+  font-size: 24px !important;
+}
+
+.info-window p {
+  font-size: 14px !important;
+}
+
+#legend span {
+  font-size: 14px !important;
+}

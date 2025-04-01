@@ -44,7 +44,7 @@ export class RadialBarViz {
             .attr("height", height + margin.top + margin.bottom);
         const svg = parent
             .append("g")
-            .attr("transform", "translate(" + (width / 2 - 25) + "," + (height / 2 + margin.top - 30) + ")");
+            .attr("transform", "translate(" + (width / 2 - 25) + "," + (height / 2 + margin.top - 10) + ")");
 
         const stackedDataMap = {};
         const keyObj = {}
@@ -68,8 +68,28 @@ export class RadialBarViz {
             .domain([0, d3.max(stackedData, d => d._total)]); // Domain of Y is from 0 to the max seen in the data
 
         const label = parent.append("text")
-            .attr("x", 50)
-            .attr("y", 90)
+            .attr("x", width / 2)
+            .attr("y", 35)
+
+        const rect = parent.append("rect")
+            .attr("stroke", colors.secondary)
+            .attr("stroke-width", 1)
+            .attr("fill", "none")
+            .attr("x", label.node().getBoundingClientRect().x)
+            .attr("y", label.node().getBoundingClientRect().y)
+            .attr("width", label.node().getBoundingClientRect().width)
+            .attr("height", label.node().getBoundingClientRect().height)
+
+        const updateLabel = (text) => {
+            label.text(text);
+            label.attr("x", (width - label.node().getComputedTextLength()) / 2)
+            rect
+                .attr("x", label.attr("x") - 10)
+                .attr("y", label.attr("y") - label.node().getBoundingClientRect().height)
+                .attr("width", label.node().getBoundingClientRect().width + 20)
+                .attr("height", label.node().getBoundingClientRect().height + 10)
+            if (text === "") rect.attr("width", 0);
+        }
 
         const domain = ["Online", "Local"]
         const legend = svg.append("g")
@@ -119,22 +139,22 @@ export class RadialBarViz {
                 }
 
                 const range = (isNaN(d[1]) ? d[0] : d[1]) - (isNaN(d[0]) ? 0 : d[0]);
-                label.text(`${range} mention${range === 1 ? '' : 's'} (total: ${d.data._total})`);
-
+                updateLabel(`${range} mention${range === 1 ? '' : 's'} (total: ${d.data._total})`);
             })
             .on('mouseout', function(event, d) {
                 viz.colorCategory(d.data.label);
                 if (viz.selected) {
                     const s = viz.barObjects[viz.selected][0][0];
                     const range = (isNaN(s[1]) ? s[0] : s[1]) - (isNaN(s[0]) ? 0 : s[0]);
-                    label.text(`${range} mention${range === 1 ? '' : 's'} (total: ${s.data._total})`);
+                    updateLabel(`${range} mention${range === 1 ? '' : 's'} (total: ${s.data._total})`)
+
                     if (s.data.label !== d.data.label) {
                         // If statement to prevent flicker on hovering same category as selected
                         viz.onClick(s.data.label);
                     }
                 }else {
                     viz.onClick(null);
-                    label.text(""); // Clear the label if no bar is selected
+                    updateLabel("") // Clear the label if no bar is selected
                 }
             })
             .on('click', function(event, d) {
