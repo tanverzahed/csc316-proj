@@ -20,12 +20,11 @@ export class RadialBarViz {
      * @param parentElementId
      * @param data {Bar[]}
      */
-    constructor(parentElementId, data, mapVIs) {
+    constructor(parentElementId, data, onClick) {
         this.parentElementId = parentElementId;
         this.data = data;
-        this.mapVis = mapVIs;
+        this.onClick = onClick;
         this.selected = null;
-        this.selectedBar = null;
     }
 
     initVis() {
@@ -72,6 +71,27 @@ export class RadialBarViz {
             .attr("x", 50)
             .attr("y", 90)
 
+        const domain = ["Online", "Local"]
+        const legend = svg.append("g")
+            .selectAll("g")
+            .data(domain)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(-40," + (i - 1) * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("width", 18)
+            .attr("height", 18)
+            .attr("fill", d3.scaleOrdinal().range([colors.default, colors.secondary]).domain(domain));
+
+        legend.append("text")
+            .attr("x", 24)
+            .attr("y", 9)
+            .attr("dy", "0.35em")
+            .text(function(d) { return d; });
+
+        // Store data points and individually rendered objects to apply styles to entire categories
+        viz.barObjects = Object.fromEntries(stackedData.map(d => [d.label, []]))
+
         // Add the bars
         svg.append("g")
             .selectAll("g")
@@ -89,54 +109,41 @@ export class RadialBarViz {
                 .endAngle(function(d) { return x(d.data.label) + x.bandwidth(); })
                 .padAngle(0.01)
                 .padRadius(innerRadius))
+            .style('cursor', 'pointer')
+            .each(function(d) {viz.barObjects[d.data.label].push([d, this])})
             .on('mouseover', function(event, d) {
-                const bar = d3.select(this).style('fill', colors.hover)
-                bar.style('cursor', 'pointer');
-                if (viz.mapVis) viz.mapVis.updateVis(null, null, d.data.label);
+                viz.highlightCategory(d.data.label);
+                if (d.data.label !== viz.selected) {
+                    // If statement to prevent flicker on hovering same category as selected
+                    viz.onClick(d.data.label);
+                }
 
                 const range = (isNaN(d[1]) ? d[0] : d[1]) - (isNaN(d[0]) ? 0 : d[0]);
                 label.text(`${range} mention${range === 1 ? '' : 's'} (total: ${d.data._total})`);
 
             })
             .on('mouseout', function(event, d) {
-                const bar = d3.select(this).style('fill', d === viz.selected ? colors.hover : d[0] !== 0 ? colors.secondary : colors.default);
-                bar.style('cursor', 'default');
-            
-                // Call the onHover callback or reset the mapVis if no bar is selected
-                if (viz.onHover) {
-                    viz.onHover(viz.selected?.data);
-                } else if (viz.mapVis && !viz.selected) {
-                    viz.mapVis.updateVis(null, null, null); // Reset mapVis when no bar is selected
-                }
-            
-                // Update the label if a bar is selected
+                viz.colorCategory(d.data.label);
                 if (viz.selected) {
-                    const s = viz.selected;
+                    const s = viz.barObjects[viz.selected][0][0];
                     const range = (isNaN(s[1]) ? s[0] : s[1]) - (isNaN(s[0]) ? 0 : s[0]);
                     label.text(`${range} mention${range === 1 ? '' : 's'} (total: ${s.data._total})`);
-                } else {
+                    if (s.data.label !== d.data.label) {
+                        // If statement to prevent flicker on hovering same category as selected
+                        viz.onClick(s.data.label);
+                    }
+                }else {
+                    viz.onClick(null);
                     label.text(""); // Clear the label if no bar is selected
                 }
             })
             .on('click', function(event, d) {
-                viz.selected = viz.selected === d ? null : d;
-
-                // Update the selected bar's style
-                if (viz.selectedBar && viz.selectedBar !== this) {
-                    d3.select(viz.selectedBar).style('fill', colors.default);
-                }
-                viz.selectedBar = this;
+                viz.changeSelected(d.data.label);
             
-                // Highlight the selected bar or reset if deselected
-                d3.select(this).style('fill', viz.selected ? colors.selected : colors.default);
-            
-                // Update mapVis based on the selected bar
-                if (viz.mapVis) {
-                    if (viz.selected) {
-                        viz.mapVis.updateVis(null, null, d.data.label); // Pass the selected category to mapVis
-                    } else {
-                        viz.mapVis.updateVis(null, null, null); // Reset mapVis if deselected
-                    }
+                if (viz.selected) {
+                    viz.onClick(d.data.label);
+                } else {
+                    viz.onClick(null);
                 }
             })
 
@@ -154,5 +161,30 @@ export class RadialBarViz {
             .style("font-size", "11px")
             .attr("alignment-baseline", "middle")
 
+    }
+
+    changeSelected(label) {
+        const previouslySelected = this.selected;
+        this.selected = this.selected === label ? null : label;
+
+        if (label) {
+            this.highlightCategory(label);
+        }
+        if (previouslySelected) {
+            // Un-highlight the previously selected
+            this.colorCategory(previouslySelected);
+        }
+    }
+
+    colorCategory(label) {
+        for (const [point, obj] of this.barObjects[label]) {
+            d3.select(obj).style('fill', point.data.label === this.selected ? colors.hover : point[0] !== 0 ? colors.secondary : colors.default)
+        }
+    }
+
+    highlightCategory(label) {
+        for (const [_point, obj] of this.barObjects[label]) {
+            d3.select(obj).style('fill', colors.hover)
+        }
     }
 }
