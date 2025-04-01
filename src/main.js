@@ -68,18 +68,19 @@ function initMainPage(allDataArray) {
   mapVis.initVis();
 
   // Prepare category data for RadialBarViz
-  const categoryCounts = {};
-  locations.forEach(location => {
-    const category = location.category;
-    categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
-  });
-  console.log(categoryCounts);
-  const categories = Object.entries(categoryCounts)
-    .map(([category, count]) => ({ label: category, value: count, key: 1 }))
-    .sort((a, b) => b.value - a.value);
+  const categories = getCategoryMentionCounts(
+      getOnlineLocationData(locations, onlineMentions),
+      getLocalLocationData(locations, localMentions)
+  );
+
+  console.log({categories})
+
+  const handleRadialBarClick = (label) => {
+    mapVis.updateVis(null, null, label);
+  }
 
   // Initialize radial bar visualization
-  radialBarViz = new RadialBarViz("radialVis", categories, mapVis);
+  radialBarViz = new RadialBarViz("radialVis", categories, handleRadialBarClick);
   radialBarViz.initVis();
 
   function normalizeWordcloudSize(count) {
@@ -113,4 +114,37 @@ function initMainPage(allDataArray) {
     );
     wordCloud.initVis();
 }
+
+function getCategoryMentionCounts(onlineLocationData, localLocationData) {
+  let categoryCounts = {};
+  onlineLocationData
+      .forEach(({location: {category}}) => {
+        categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
+      });
+  const categories = Object.entries(categoryCounts)
+      .map(([category, count]) => ({label: category, value: count, key: 1}))
+      .sort((a, b) => b.value - a.value);
+  categoryCounts = {};
+  localLocationData
+      .forEach(({location: {category}}) => {
+        categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
+      });
+  Object.entries(categoryCounts).forEach(([category, count]) => categories.push({
+    label: category,
+    value: count,
+    key: 2
+  }));
+  return categories;
+}
+
+function getLocalLocationData(locations, local) {
+  const locationById = Object.fromEntries(locations.map(l => [l.location_id, l]));
+  return local.map(l => ({...l, location: locationById[l.location_id]}));
+}
+
+export function getOnlineLocationData(locations, online) {
+  const locationById = Object.fromEntries(locations.map(l => [l.location_id, l]));
+  return online.map(l => ({...l, location: locationById[l.location_id]}));
+}
+
 
