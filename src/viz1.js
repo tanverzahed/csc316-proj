@@ -137,7 +137,7 @@ class TouristVis {
     vis.updateVis(null);
   }
 
-  updateVis(Person) {
+  updateVis(Person, filterlocationId, categoryFilter) {
     const vis = this;
     // Clear existing markers.
     vis.markers.forEach(marker => marker.setMap(null));
@@ -152,6 +152,12 @@ class TouristVis {
             m.location_id === location.location_id && m.Person === Person
           );
           if (!localMatch) return;
+        }
+        if (filterlocationId && location.location_id !== filterlocationId) {
+          return; // Skip if location ID doesn't match the filter
+        }
+        if (categoryFilter && location.category !== categoryFilter) {
+          return; // Skip if category doesn't match the filter
         }
         // Determine marker styles.
         const hasLocal = Person
@@ -224,58 +230,4 @@ class TouristVis {
   }
 }
 
-let mapVis;
-
-let promises = [
-    d3.json("/data/locations_data.json"),
-    d3.json("/data/online_mentions.json"),
-    d3.json("/data/person_info.json"),
-    d3.json("/data/local_mentions.json")
-];
-
-Promise.all(promises)
-  .then(function(data){ initMainPage(data) })
-  .catch(function(err){ console.log(err) });
-
-// initMainPage
-function initMainPage(allDataArray) {
-  const locations = allDataArray[0];
-  const onlineMentions = allDataArray[1];
-  const personInfo = allDataArray[2];
-  const localMentions = allDataArray[3];
-
-  document.getElementById("personSort").innerHTML = `
-    <fieldset>
-      <legend>Filter by person:</legend>
-      ${personInfo.map(p => `
-        <div class="option">
-          <label>
-            <input 
-              type="radio" 
-              name="person" 
-              class="optionStyle" 
-              value="${p.Person}"> 
-            ${p.Person} 
-          </label><br />
-          <div>${p.description}</div>
-        </div>
-      `).join("")}
-    </fieldset>
-    <button id="clearSelection">Clear</button>
-  `;
-
-  document.getElementById("clearSelection").addEventListener("click", function() {
-    document.querySelectorAll("input[name='person']").forEach(input => {
-      input.checked = false;
-    });
-    mapVis.updateVis(null);
-  });
-  document.getElementById("personSort").addEventListener("change", function() {
-  const selectedPerson = this.querySelector("input[name='person']:checked").value;
-  console.log(selectedPerson);
-  mapVis.updateVis(selectedPerson);
-  });
-  // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
-  mapVis = new TouristVis(locations, onlineMentions, personInfo, localMentions);
-  mapVis.initVis();
-}
+export { TouristVis };

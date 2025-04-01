@@ -9,17 +9,93 @@
 <body>
 
 <!-- WRAPPER -->
-<div class="container">
+<div>
     <h1>Toronto Tourist Attractions</h1>
-    <div id="visualization">
-        <fieldset id="personSort">
+    <div id="wordCloudContainer"></div>
+    <section class="text-gray-600 body-font">
+        <div class="container flex flex-wrap px-5 py-24 mx-auto items-center">
+          <div class="md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200">
+            <a id="backButton" 
+            class="hidden group relative overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+            >
+            <span
+              class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+            ></span>
 
-        </fieldset>
+            <span
+              class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+            >
+              Back
+            </span>
+            </a>         
+            <div id="choose">
+              <h1>What would you like to sort by?</h1>
+  
+              <a id="peopleButton"
+                class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+              >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
+              <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+              >
+                People
+              </span>
+              </a>
+              <a id="categoriesButton"
+                class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+              >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
 
-    </div>
+              <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+              >
+                Categories
+              </span>
+              </a>
+            </div>
+            <div id="radialVis" class="hidden"></div>
+            <div id="personSort" class="hidden"></div>
+        </div>
+          <div class="basis-24 md:w-1/2 md:pl-12">
+            <div id="map"></div>
+          </div>
+        </div>
+    </section>
     <div id="map"></div>
 </div>
+<script>
+  let peopleButton = document.getElementById("peopleButton");
+  let categoriesButton = document.getElementById("categoriesButton");
+  let backButton = document.getElementById("backButton");
+  backButton.addEventListener("click", function() {
+    document.getElementById("personSort").classList.add("hidden");
+    document.getElementById("radialVis").classList.add("hidden");
+    document.getElementById("choose").classList.add("block");
+    document.getElementById("choose").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("hidden");
+  });
 
+  peopleButton.addEventListener("click", function() {
+    document.getElementById("radialVis").classList.add("hidden");
+    document.getElementById("personSort").classList.remove("hidden");
+    document.getElementById("personSort").classList.add("block");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+  categoriesButton.addEventListener("click", function() {
+    document.getElementById("personSort").classList.add("hidden");
+    document.getElementById("radialVis").classList.remove("hidden");
+    document.getElementById("radialVis").classList.add("block");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+</script>
 <!-- d3 -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
@@ -37,7 +113,10 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSvmpFqhAq05j2PoCQy5lc8yb
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+<!-- Function for radial charts -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+
 <!-- Application JS -->
-<script type="module" src="./src/viz1.js"></script>
+<script type="module" src="./src/main.js"></script>
 </body>
 </html>

@@ -1,13 +1,29 @@
 @import "tailwindcss";
 
 #map {
-  width: 100%;
-  height: 500px;
+  width: 700px !important;
+  height: 700px !important;
   margin-bottom: 20px;
 }
-.container {
-  padding: 20px;
+#wordcloud {
+  width: 900px;
+  height: 450px;
+  display: block !important;  /* Ensure it's visible */
+  position: relative;
 }
-h1 {
-  margin-bottom: 20px;
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.color-fix-border {
+  border-color: rgb(105, 179, 162);
+}
+
+.color-fix-bg {
+  background-color: rgb(105, 179, 162);
+}
+.color-fix-text {
+  color: rgb(105, 179, 162);
 }
