@@ -131,11 +131,11 @@ class TouristVis {
     const legend = document.createElement("div");
     legend.id = "legend";
 
-    legend.innerHTML = `<div class="p-2 mr-2 shadow-sm" style="background-color:white;">
-        <h6>Legend</h6>
-        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #2196F3"></div><div>Online</div></div>
-        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #4CAF50"></div><div>Local</div></div>
-        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #9932CC"></div><div>Both</div></div>
+    legend.innerHTML = `<div class="p-2.5 mr-2 shadow-sm" style="background-color:white;">
+        <h5>Legend</h5>
+        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #2196F3"></div><span>Online</span></div>
+        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #4CAF50"></div><span>Local</span></div>
+        <div class="flex gap-1 items-center"><div class="min-w-2 min-h-2" style="background-color: #9932CC"></div><span>Both</span></div>
     </div>`
     vis.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
   }
