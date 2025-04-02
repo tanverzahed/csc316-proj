@@ -151,14 +151,14 @@ function initMainPage(allDataArray) {
   const wordCloud = new WordCloud(
     "wordCloudVis",
     wordCloudData,
-    { width: 900, height: 450 },
+    { width: window.innerWidth * 0.45, height: 450 },
     handleWordCloudHover,
     changeSelectedPlace
   );
   wordCloud.initVis();
 
   const onlineBarGraphMargin = {top: 30, right: 30, bottom: 70, left: 60},
-      onlineBarGraphWidth = (420 - onlineBarGraphMargin.left - onlineBarGraphMargin.right) * 2,
+      onlineBarGraphWidth = window.innerWidth * 0.45 - (onlineBarGraphMargin.left + onlineBarGraphMargin.right),
       onlineBarGraphHeight = 400 - onlineBarGraphMargin.top - onlineBarGraphMargin.bottom;
   const onlineBarGraph = new BarViz({
     data: onlineMentions,
