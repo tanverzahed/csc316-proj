@@ -51,43 +51,7 @@ function initMainPage(allDataArray) {
     `).join("")}
   </div>`;
 
-// Attach event listeners to accordion buttons
-document.querySelectorAll(".accordion-button").forEach(button => {
-  button.addEventListener("click", function () {
-    const targetId = this.getAttribute("data-accordion-target");
-    const targetElement = document.querySelector(targetId);
-    // Close all other accordions first
-    document.querySelectorAll(".accordion-button").forEach(otherButton => {
-      if (otherButton !== this) {
-        const otherTargetId = otherButton.getAttribute("data-accordion-target");
-        const otherTargetElement = document.querySelector(otherTargetId);
-        otherButton.setAttribute("aria-expanded", "false");
-        otherTargetElement.classList.add("hidden");
-        const otherIcon = otherButton.querySelector("[data-accordion-icon]");
-        otherIcon.classList.add("rotate-180");
-      }
-    });
 
-    // Toggle visibility of the clicked accordion body
-    const isExpanded = this.getAttribute("aria-expanded") === "true";
-    this.setAttribute("aria-expanded", !isExpanded);
-    targetElement.classList.toggle("hidden", isExpanded);
-    const dataAcordianIcon = this.querySelector("[data-accordion-icon]");
-    dataAcordianIcon.classList.toggle("rotate-180", isExpanded);
-
-    // If the accordion body is revealed, render the ProfileViz
-    if (!isExpanded) {
-      const profileContainer = document.getElementById(`profile-container-${targetId.split("-").pop()}`);
-      profileContainer.innerHTML = ""; 
-      const profileViz = new ProfileViz({
-        parentElement: profileContainer,
-        profile: personInfo.find(p => p.Person === this.getAttribute("data-person")),
-        localLocationData: locationInput
-      });
-      profileViz.render();
-    }
-  });
-});
 
   // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
   mapVis = new TouristVis(locations,
@@ -103,6 +67,48 @@ document.querySelectorAll(".accordion-button").forEach(button => {
       getOnlineLocationData(locations, onlineMentions),
       getLocalLocationData(locations, localMentions)
   );
+
+  // Attach event listeners to accordion buttons
+  document.querySelectorAll(".accordion-button").forEach(button => {
+    button.addEventListener("click", function () {
+      const targetId = this.getAttribute("data-accordion-target");
+      const targetElement = document.querySelector(targetId);
+      // Close all other accordions first
+      document.querySelectorAll(".accordion-button").forEach(otherButton => {
+        if (otherButton !== this) {
+          const otherTargetId = otherButton.getAttribute("data-accordion-target");
+          const otherTargetElement = document.querySelector(otherTargetId);
+          otherButton.setAttribute("aria-expanded", "false");
+          otherTargetElement.classList.add("hidden");
+          const otherIcon = otherButton.querySelector("[data-accordion-icon]");
+          otherIcon.classList.add("rotate-180");
+        }
+      });
+
+      // Toggle visibility of the clicked accordion body
+      const isExpanded = this.getAttribute("aria-expanded") === "true";
+      this.setAttribute("aria-expanded", !isExpanded);
+      targetElement.classList.toggle("hidden", isExpanded);
+      const dataAcordianIcon = this.querySelector("[data-accordion-icon]");
+      dataAcordianIcon.classList.toggle("rotate-180", isExpanded);
+
+      // If the accordion body is revealed, render the ProfileViz
+      if (!isExpanded) {
+        const profileContainer = document.getElementById(`profile-container-${targetId.split("-").pop()}`);
+        profileContainer.innerHTML = ""; 
+        const profileViz = new ProfileViz({
+          parentElement: profileContainer,
+          profile: personInfo.find(p => p.Person === this.getAttribute("data-person")),
+          localLocationData: locationInput
+        });
+        profileViz.render();
+        mapVis.updateVis(this.getAttribute("data-person"), null, null);
+      }
+      else {
+        mapVis.updateVis(null, null, null);
+      }
+    });
+  });
 
   const handleRadialBarClick = (label) => {
     mapVis.updateVis(null, null, label);
