@@ -68,6 +68,17 @@ function initMainPage(allDataArray) {
       getLocalLocationData(locations, localMentions)
   );
 
+  let backButton = document.getElementById("backButton");
+  backButton.addEventListener("click", function() {
+    document.getElementById("personSort").classList.add("hidden");
+    document.getElementById("radialVis").classList.add("hidden");
+    document.getElementById("wordCloudVis").classList.add("hidden");
+    document.getElementById("choose").classList.add("block");
+    document.getElementById("choose").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("hidden");
+    mapVis.updateVis(null, null, null);
+  });
+
   // Attach event listeners to accordion buttons
   document.querySelectorAll(".accordion-button").forEach(button => {
     button.addEventListener("click", function () {
