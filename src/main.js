@@ -2,7 +2,8 @@ import { TouristVis } from "./viz1.js";
 import * as d3 from "d3";
 import { RadialBarViz } from "./radialBarViz.js";
 import { WordCloud } from "./wordcloudviz.js";
-import {BarViz} from "./barViz.js";
+import { ProfileViz } from "./profileViz.js";
+import { BarViz } from "./barViz.js";
 
 let mapVis, radialBarViz;
 
@@ -24,45 +25,70 @@ function initMainPage(allDataArray) {
   const personInfo = allDataArray[2];
   const localMentions = allDataArray[3];
 
+  const locationsCopy = JSON.parse(JSON.stringify(locations));
+  const localMentionsCopy = JSON.parse(JSON.stringify(localMentions));
+
+  const locationsByID = Object.fromEntries(locationsCopy.map(l => [l.location_id, l]));;
+  const locationInput = localMentionsCopy.map(l => ({...l, location: locationsByID[l.location_id]}));
+  
+
   document.getElementById("personSort").innerHTML = `
-  <fieldset id="personSort" class="space-y-3">
-    <legend class="sr-only">Select a person</legend>
-    ${personInfo.map(p => `
-      <div>
-        <label
-          for="${p.Person}"
-          class="flex items-center justify-between gap-4 min-w-full rounded border border-gray-300 bg-white p-3 text-sm font-medium shadow-sm transition-colors hover:bg-gray-50 has-checked:border-blue-600 has-checked:ring-1 has-checked:ring-blue-600"
-        >
-          <div>
-            <p class="text-gray-700">${p.Person}</p>
-            <p class="text-gray-900">${p.description}</p>
-          </div>
-          <input
-            type="radio"
-            name="person"
-            value="${p.Person}"
-            id="${p.Person}"
-            class="size-5 border-gray-300"
-          />
-        </label>
+  <div id="accordion-collapse" data-accordion="collapse">
+    ${personInfo.map((p, index) => `
+      <h2 id="accordion-collapse-heading-${index}">
+        <button type="button" class="accordion-button flex items-center justify-between w-full p-3 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-${index}" aria-expanded="false" aria-controls="accordion-collapse-body-${index}" data-person="${p.Person}">
+          <span>${p.Person}</span>
+          <svg data-accordion-icon class="w-3 h-3 shrink-0 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+          </svg>
+        </button>
+      </h2>
+      <div id="accordion-collapse-body-${index}" class="accordion-body hidden" aria-labelledby="accordion-collapse-heading-${index}">
+        <div id="profile-container-${index}" class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
+          <!-- ProfileViz will be rendered here -->
+        </div>
       </div>
     `).join("")}
-  </fieldset>
-  <button id="clearSelection" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
-    Clear
-  </button>
-`;
+  </div>`;
 
-  document.getElementById("clearSelection").addEventListener("click", function() {
-    document.querySelectorAll("input[name='person']").forEach(input => {
-      input.checked = false;
+// Attach event listeners to accordion buttons
+document.querySelectorAll(".accordion-button").forEach(button => {
+  button.addEventListener("click", function () {
+    const targetId = this.getAttribute("data-accordion-target");
+    const targetElement = document.querySelector(targetId);
+    // Close all other accordions first
+    document.querySelectorAll(".accordion-button").forEach(otherButton => {
+      if (otherButton !== this) {
+        const otherTargetId = otherButton.getAttribute("data-accordion-target");
+        const otherTargetElement = document.querySelector(otherTargetId);
+        otherButton.setAttribute("aria-expanded", "false");
+        otherTargetElement.classList.add("hidden");
+        const otherIcon = otherButton.querySelector("[data-accordion-icon]");
+        otherIcon.classList.add("rotate-180");
+      }
     });
-    mapVis.updateVis(null);
+
+    // Toggle visibility of the clicked accordion body
+    const isExpanded = this.getAttribute("aria-expanded") === "true";
+    this.setAttribute("aria-expanded", !isExpanded);
+    targetElement.classList.toggle("hidden", isExpanded);
+    const dataAcordianIcon = this.querySelector("[data-accordion-icon]");
+    dataAcordianIcon.classList.toggle("rotate-180", isExpanded);
+
+    // If the accordion body is revealed, render the ProfileViz
+    if (!isExpanded) {
+      const profileContainer = document.getElementById(`profile-container-${targetId.split("-").pop()}`);
+      profileContainer.innerHTML = ""; 
+      const profileViz = new ProfileViz({
+        parentElement: profileContainer,
+        profile: personInfo.find(p => p.Person === this.getAttribute("data-person")),
+        localLocationData: locationInput
+      });
+      profileViz.render();
+    }
   });
-  document.getElementById("personSort").addEventListener("change", function() {
-  const selectedPerson = this.querySelector("input[name='person']:checked").value;
-  mapVis.updateVis(selectedPerson);
-  });
+});
+
   // Note: Parameter order now is locationData, onlineMentions, personInfo, localMentions.
   mapVis = new TouristVis(locations,
       onlineMentions,

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 #map {
   width: 700px !important;
