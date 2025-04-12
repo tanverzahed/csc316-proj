@@ -1,0 +1,434 @@
+[
+  {
+    "location_id": 1,
+    "name": "Aga Khan",
+    "latitude": 43.72540714,
+    "longitude": -79.33213727,
+    "address": "77 Wynford Dr, North York, ON M3C 1K1",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 2,
+    "name": "AGO",
+    "latitude": 43.65374633,
+    "longitude": -79.39246938,
+    "address": "317 Dundas St W, Toronto, ON M5T 1G4",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 3,
+    "name": "Allan Gardens",
+    "latitude": 43.6617816,
+    "longitude": -79.37458802,
+    "address": "160 Gerrard St E, Toronto, ON M5A 2E5",
+    "cost": "Paid",
+    "category": "Garden"
+  },
+  {
+    "location_id": 4,
+    "name": "Bata Shoe Museum",
+    "latitude": 43.6674995,
+    "longitude": -79.40021279,
+    "address": "327 Bloor St W, Toronto, ON M5S 1W7",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 5,
+    "name": "Budweiser Stage",
+    "latitude": 43.62929327,
+    "longitude": -79.41475716,
+    "address": "909 Lake Shore Blvd W, Toronto, ON M6K 3L3",
+    "cost": "Paid",
+    "category": "Venue"
+  },
+  {
+    "location_id": 6,
+    "name": "Canada's Wonderland",
+    "latitude": 43.84254759,
+    "longitude": -79.54112967,
+    "address": "Vaughan, ON L6A 1S6",
+    "cost": "Paid",
+    "category": "Theme Park"
+  },
+  {
+    "location_id": 7,
+    "name": "Casa Loma",
+    "latitude": 43.67831641,
+    "longitude": -79.40920787,
+    "address": "1 Austin Terrace, Toronto, ON M5R 1X8",
+    "cost": "Paid",
+    "category": "Historic"
+  },
+  {
+    "location_id": 8,
+    "name": "Chinatown",
+    "latitude": 43.6530686,
+    "longitude": -79.39777233,
+    "address": "MJ32+5QW Toronto, Ontario",
+    "cost": "Free",
+    "category": "District"
+  },
+  {
+    "location_id": 9,
+    "name": "CN Tower",
+    "latitude": 43.64275251,
+    "longitude": -79.3870568,
+    "address": "290 Bremner Blvd, Toronto, ON M5V 3L9",
+    "cost": "Paid",
+    "category": "Tower"
+  },
+  {
+    "location_id": 10,
+    "name": "Cultural foods",
+    "latitude": null,
+    "longitude": null,
+    "address": null,
+    "cost": "Paid",
+    "category": "Restaurant"
+  },
+  {
+    "location_id": 11,
+    "name": "Distillery District",
+    "latitude": 43.65051058,
+    "longitude": -79.35827161,
+    "address": "55 Mill St, Toronto, ON M5A 3C4",
+    "cost": "Free",
+    "category": "Historic"
+  },
+  {
+    "location_id": 12,
+    "name": "Eaton Center",
+    "latitude": 43.65459342,
+    "longitude": -79.37954069,
+    "address": "220 Yonge St, Toronto, ON M5B 2H1",
+    "cost": "Free",
+    "category": "Shopping District"
+  },
+  {
+    "location_id": 13,
+    "name": "Elgin & Winter Garden Theatres",
+    "latitude": 43.6532803,
+    "longitude": -79.37890228,
+    "address": "189 Yonge St, Toronto, ON M5B 1M4",
+    "cost": "Paid",
+    "category": "Theater"
+  },
+  {
+    "location_id": 14,
+    "name": "Evergreen Brick Works",
+    "latitude": 43.68455637,
+    "longitude": -79.36479853,
+    "address": "550 Bayview Ave, Toronto, ON M4W 3X8",
+    "cost": "Free",
+    "category": "Historic"
+  },
+  {
+    "location_id": 15,
+    "name": "Fork York Historic Site",
+    "latitude": 43.63939696,
+    "longitude": -79.4039946,
+    "address": "250 Fort York Blvd, Toronto, ON M5V 3K9",
+    "cost": "Free",
+    "category": "Historic"
+  },
+  {
+    "location_id": 16,
+    "name": "Graffiti Alley",
+    "latitude": 43.64802536,
+    "longitude": -79.39818433,
+    "address": "507 Graffiti Alley, Toronto, ON M5V 2W1",
+    "cost": "Free",
+    "category": "Tourist Street"
+  },
+  {
+    "location_id": 17,
+    "name": "Harbourfront",
+    "latitude": 43.64058446,
+    "longitude": -79.37846934,
+    "address": "186-194 Queens Quay W, Toronto, ON M6R 2Z3",
+    "cost": "Free",
+    "category": "Scenery"
+  },
+  {
+    "location_id": 18,
+    "name": "High Park",
+    "latitude": 43.64669538,
+    "longitude": -79.4636152,
+    "address": "1873 Bloor St W, Toronto, ON M6R 2Z3",
+    "cost": "Free",
+    "category": "Park"
+  },
+  {
+    "location_id": 19,
+    "name": "Hockey Hall of Fame",
+    "latitude": 43.64741968,
+    "longitude": -79.37756146,
+    "address": "30 Yonge St, Toronto, ON M5E 1X8",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 20,
+    "name": "Kensington Market",
+    "latitude": 43.65526008,
+    "longitude": -79.3997595,
+    "address": "160 Baldwin St, Toronto, ON M5T 1L8",
+    "cost": "Free",
+    "category": "Shopping District"
+  },
+  {
+    "location_id": 21,
+    "name": "Massey Hall",
+    "latitude": 43.65421111,
+    "longitude": -79.37888107,
+    "address": "178 Victoria St, Toronto, ON M5B 1T6",
+    "cost": "Free",
+    "category": "Historic"
+  },
+  {
+    "location_id": 22,
+    "name": "Museum of Illusions",
+    "latitude": 43.65045384,
+    "longitude": -79.36946014,
+    "address": "132 Front St E, Toronto, ON M5A 1E2",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 23,
+    "name": "Nathan Phillips Square",
+    "latitude": 43.6530329,
+    "longitude": -79.38296309,
+    "address": "100 Queen St W, Toronto, ON M5H 2N3",
+    "cost": "Free",
+    "category": "Plaza"
+  },
+  {
+    "location_id": 24,
+    "name": "Niagara",
+    "latitude": 43.08829591,
+    "longitude": -79.10171678,
+    "address": "6650 Niagara Pkwy, Niagara Falls, ON L2G 0L0",
+    "cost": "Free",
+    "category": "Scenery"
+  },
+  {
+    "location_id": 25,
+    "name": "Ontario Science Center",
+    "latitude": null,
+    "longitude": null,
+    "address": null,
+    "cost": "Paid",
+    "category": "Science Center"
+  },
+  {
+    "location_id": 26,
+    "name": "Philosopher's Walk",
+    "latitude": 43.66652616,
+    "longitude": -79.39472353,
+    "address": "78 Queens Pk Cres W, Toronto, ON M5S 2C5",
+    "cost": "Free",
+    "category": "Scenery"
+  },
+  {
+    "location_id": 27,
+    "name": "Ripley's",
+    "latitude": 43.64227164,
+    "longitude": -79.38638763,
+    "address": "288 Bremner Blvd, Toronto, ON M5V 3L9",
+    "cost": "Paid",
+    "category": "Aquarium"
+  },
+  {
+    "location_id": 28,
+    "name": "Riverdale Farm",
+    "latitude": 43.66708948,
+    "longitude": -79.36126976,
+    "address": "201 Winchester St, Toronto, ON M4X 1B8",
+    "cost": "Free",
+    "category": "Farm"
+  },
+  {
+    "location_id": 29,
+    "name": "Rogers Center",
+    "latitude": 43.64173882,
+    "longitude": -79.38947112,
+    "address": "1 Blue Jays Way, Toronto, ON M5V 1J3",
+    "cost": "Paid",
+    "category": "Stadium"
+  },
+  {
+    "location_id": 30,
+    "name": "ROM",
+    "latitude": 43.66788817,
+    "longitude": -79.39469127,
+    "address": "100 Queens Park, Toronto, ON M5S 2C6",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 31,
+    "name": "Rouge National Urban Park",
+    "latitude": 43.81809205,
+    "longitude": -79.1728629,
+    "address": "25 Zoo Rd, Scarborough, ON M1B 5W8",
+    "cost": "Free",
+    "category": "Park"
+  },
+  {
+    "location_id": 32,
+    "name": "Roy Thomson Hall",
+    "latitude": 43.64683191,
+    "longitude": -79.38646055,
+    "address": "60 Simcoe St, Toronto, ON M5J 2H5",
+    "cost": "Free",
+    "category": "Historic"
+  },
+  {
+    "location_id": 33,
+    "name": "Royal Alexandra Theatre",
+    "latitude": 43.64750161,
+    "longitude": -79.3875894,
+    "address": "260 King St W, Toronto, ON M5V 1H9",
+    "cost": "Paid",
+    "category": "Theater"
+  },
+  {
+    "location_id": 34,
+    "name": "Scarborough Bluffs",
+    "latitude": 43.70612235,
+    "longitude": -79.23159524,
+    "address": "Scarborough, ON M1M 3W3",
+    "cost": "Free",
+    "category": "Scenic"
+  },
+  {
+    "location_id": 35,
+    "name": "Scotiabank Arena",
+    "latitude": 43.6436524,
+    "longitude": -79.37905599,
+    "address": "40 Bay St., Toronto, ON M5J 3A5",
+    "cost": "Paid",
+    "category": "Stadium"
+  },
+  {
+    "location_id": 36,
+    "name": "St. Lawrence Market",
+    "latitude": 43.64877327,
+    "longitude": -79.37156686,
+    "address": "Toronto, ON M5E 1C3",
+    "cost": "Paid",
+    "category": "Market"
+  },
+  {
+    "location_id": 37,
+    "name": "The Beaches",
+    "latitude": 43.67062205,
+    "longitude": -79.2991023,
+    "address": null,
+    "cost": "Free",
+    "category": "District"
+  },
+  {
+    "location_id": 38,
+    "name": "TIFF Lightbox",
+    "latitude": 43.64676849,
+    "longitude": -79.39060264,
+    "address": "350 King St W, Toronto, ON M5V 3X5",
+    "cost": "Paid",
+    "category": "Culture Center"
+  },
+  {
+    "location_id": 39,
+    "name": "Toronto City Hall",
+    "latitude": 43.65365775,
+    "longitude": -79.38418959,
+    "address": "100 Queen St W, Toronto, ON M5H 2N2",
+    "cost": "Free",
+    "category": "Architecture"
+  },
+  {
+    "location_id": 40,
+    "name": "Toronto Islands",
+    "latitude": 43.61663835,
+    "longitude": -79.38352397,
+    "address": "St Lawrence-East Bayfront-The Islands, ON",
+    "cost": "Paid",
+    "category": "Scenery"
+  },
+  {
+    "location_id": 41,
+    "name": "Toronto Music Garden",
+    "latitude": 43.6371159,
+    "longitude": -79.39442515,
+    "address": "479 Queens Quay W, Toronto, ON M5V 3M8",
+    "cost": "Free",
+    "category": "Garden"
+  },
+  {
+    "location_id": 42,
+    "name": "Toronto Railway Museum",
+    "latitude": 43.64082091,
+    "longitude": -79.38589536,
+    "address": "255 Bremner Blvd, Toronto, ON M5V 3M9",
+    "cost": "Paid",
+    "category": "Museum"
+  },
+  {
+    "location_id": 43,
+    "name": "Toronto Zoo",
+    "latitude": 43.81796731,
+    "longitude": -79.18535147,
+    "address": "2000 Meadowvale Rd, Toronto, ON M1B 5K7",
+    "cost": "Paid",
+    "category": "Zoo"
+  },
+  {
+    "location_id": 44,
+    "name": "Trinity Bellwoods Park",
+    "latitude": 43.64740669,
+    "longitude": -79.41363877,
+    "address": "790 Queen St W, Toronto, ON M6J 1G3",
+    "cost": "Free",
+    "category": "Park"
+  },
+  {
+    "location_id": 45,
+    "name": "University of Toronto",
+    "latitude": 43.6648526,
+    "longitude": -79.39546548,
+    "address": "27 King's College Cir, Toronto, ON M5S 1A1",
+    "cost": "Free",
+    "category": "University"
+  },
+  {
+    "location_id": 46,
+    "name": "Village at Black Creek",
+    "latitude": 43.7757681,
+    "longitude": -79.50063555,
+    "address": "1000 Murray Ross Pkwy, Toronto, ON M3J 2P3",
+    "cost": "Free",
+    "category": "District"
+  },
+  {
+    "location_id": 47,
+    "name": "Yonge Dundas Square",
+    "latitude": 43.6560766,
+    "longitude": -79.3804405,
+    "address": "1 Dundas St E, Toronto, ON M5B 2R8",
+    "cost": "Free",
+    "category": "Plaza"
+  },
+  {
+    "location_id": 48,
+    "name": "Yorkville",
+    "latitude": 43.67070924,
+    "longitude": -79.39220439,
+    "address": null,
+    "cost": "Free",
+    "category": "District"
+  }
+]

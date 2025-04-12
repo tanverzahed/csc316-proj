@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Toronto Tourist Attractions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script type="module" crossorigin src="/assets/index-CT_dCCN2.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CvnDcxOF.css">
+</head>
+<body>
+
+<!-- WRAPPER -->
+<div>
+    <section class="text-gray-600 body-font">
+        <div class="container min-w-full grid grid-cols-2 px-5 py-16 items-center">
+          <h1 class="text-center col-span-2">Toronto Tourist Attractions</h1>
+          <div class="flex flex-col row-start-2 items-end md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200 float-right">
+            <a id="backButton"
+            class="hidden group relative overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+            >
+            <span
+              class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+            ></span>
+
+            <span
+              class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+            >
+              Back
+            </span>
+            </a>         
+            <div id="choose">
+              <h1>What would you like to sort by?</h1>
+  
+              <a id="peopleButton"
+                class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+              >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
+              <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+              >
+                People
+              </span>
+              </a>
+              <a id="categoriesButton"
+                class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+              >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
+
+              <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+              >
+                Categories
+              </span>
+              </a>
+                <a id="placesButton"
+                  class="group relative inline-block overflow-hidden border color-fix-border px-8 py-3 focus:ring-3 focus:outline-hidden"
+                >
+              <span
+                class="absolute inset-y-0 right-0 w-[2px] color-fix-bg transition-all group-hover:w-full"
+              ></span>
+                <span
+                  class="relative text-sm font-medium color-fix-text transition-colors group-hover:text-white"
+                >
+                Popular Places
+              </span>
+                </a>
+            </div>
+            <div id="wordCloudVis" class="hidden"></div>
+            <div id="radialVis" class="hidden"></div>
+            <div id="personSort" class="hidden custom-height mt-4 w-full"></div>
+        </div>
+          <div class="basis-24 md:pl-12 row-start-2">
+            <div id="map"></div>
+          </div>
+        </div>
+    </section>
+</div>
+<script>
+  let peopleButton = document.getElementById("peopleButton");
+  let categoriesButton = document.getElementById("categoriesButton");
+  let placesButton = document.getElementById("placesButton");
+
+  peopleButton.addEventListener("click", function() {
+    document.getElementById("personSort").classList.remove("hidden");
+    document.getElementById("personSort").classList.add("block");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+  categoriesButton.addEventListener("click", function() {
+    document.getElementById("radialVis").classList.remove("hidden");
+    document.getElementById("radialVis").classList.add("block");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+  placesButton.addEventListener("click", function() {
+    document.getElementById("wordCloudVis").classList.add("block");
+    document.getElementById("wordCloudVis").classList.remove("hidden");
+    document.getElementById("choose").classList.add("hidden");
+    document.getElementById("backButton").classList.remove("hidden");
+    document.getElementById("backButton").classList.add("block");
+  });
+</script>
+<!-- d3 -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="https://d3js.org/d3-geo.v1.min.js"></script>
+
+<!-- Google Maps API -->
+<script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSvmpFqhAq05j2PoCQy5lc8ybq1YbQafc&callback=initMap">
+</script>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<!-- Function for radial charts -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+
+<!-- Application JS -->
+</body>
+</html>
